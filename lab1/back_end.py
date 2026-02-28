@@ -1,3 +1,4 @@
+import math
 class randomNumbersGenerator:
     def __init__(self, m, a, c, x0):
         self.m = m
@@ -8,6 +9,33 @@ class randomNumbersGenerator:
     def generateIntNumber(self):
         self.x = (self.a * self.x + self.c) % self.m
         return self.x
+
+def gcd(a, b):
+    if not a > b:
+        a, b = b, a
+    
+    while True:
+        r = a % b
+
+        if r > 0:
+            a = b
+            b = r
+            continue
+        else:
+            break
+
+    return b
+
+
+
+
+
+
+
+
+
+
+
 
 
 def main():
@@ -29,6 +57,8 @@ def main():
         except ValueError:
             print('Error, enter an integer')
 
+    array = []
+
 
     with open(filename, 'w') as file:
         file.write('----Results----\n')
@@ -36,12 +66,35 @@ def main():
         file.write(f'Number of generated integers: {numbersToGenerate}\n')
         for i in range(numbersToGenerate):
             generatedNumber = random.generateIntNumber()
-
+            array.append(generatedNumber)
             resultTemp = f'X_{i} = {generatedNumber}'
 
             print(resultTemp)
 
             file.write(resultTemp + '\n')
+
+    print(array)
+
+
+    counter = 0
+
+
+    for i in range(numbersToGenerate - 1):
+        if gcd(array[i], array[i+1]) == 1:
+            counter += 1
+
+
+    print('c: ', counter)
+    print('r: ', counter/numbersToGenerate)
+    print('r: ', 6/math.pi**2)
+
+
+
+
+
+
+
+
 
 main()
 
