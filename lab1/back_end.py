@@ -26,18 +26,6 @@ def gcd(a, b):
 
     return b
 
-
-
-
-
-
-
-
-
-
-
-
-
 def main():
     m = 2**12 - 1
     a = 4**5
@@ -87,13 +75,6 @@ def main():
     print('c: ', counter)
     print('r: ', counter/numbersToGenerate)
     print('r: ', 6/math.pi**2)
-
-
-
-
-
-
-
 
 
 main()

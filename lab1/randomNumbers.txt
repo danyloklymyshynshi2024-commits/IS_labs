@@ -1,6 +1,6 @@
 ----Results----
 m = 4095, a = 1024, c = 2, x0 = 8
-Number of generated integers: 10
+Number of generated integers: 20
 X_0 = 4
 X_1 = 3
 X_2 = 3074
@@ -11,3 +11,13 @@ X_6 = 2734
 X_7 = 2733
 X_8 = 1709
 X_9 = 1453
+X_10 = 1389
+X_11 = 1373
+X_12 = 1369
+X_13 = 1368
+X_14 = 344
+X_15 = 88
+X_16 = 24
+X_17 = 8
+X_18 = 4
+X_19 = 3
