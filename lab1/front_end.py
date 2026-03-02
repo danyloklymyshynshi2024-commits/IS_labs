@@ -115,7 +115,7 @@ class MainWindow(QWidget):
                 numbers = generateNumbers(count) 
 
                 accuracy_results = runTest(numbers)
-                accuracy_display.setText(f'Приблизне pі на основі отриманого результату: {accuracy_results}')
+                accuracy_display.setText(f'Приблизне π на основі отриманого результату: {accuracy_results}')
                 result_display.setText(f"Результат: {str(numbers)}")
                 
             except ValueError:

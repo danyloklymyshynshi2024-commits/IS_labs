@@ -88,9 +88,4 @@ def generateNumbers(numbersToGenerate):
         file.write(f'Period: {period}')
     return randomValues
 
-def testModule(randomValues):
-    libraryGeneratedRandomValues = [random.randint(1, 2**12-1) for _ in range(len(randomValues))]
-    estimatedPi_libraryVers = runTest(libraryGeneratedRandomValues)
-    estimatedPi = runTest(randomValues)
-
 
