@@ -201,14 +201,12 @@ def main():
         font-size: 30px; 
         font-weight: bold; 
         margin-bottom: 20px;        
+        font-family: 'Segoe UI', sans-serif;
+        color: #2c3e50;
         }
 
         QWidget {
             background-color: #bbd8b3
-        }
-        QLabel {
-            font-family: 'Segoe UI', sans-serif;
-            color: #2c3e50;
         }
         QPushButton {
             background-color: #F3B61F;
