@@ -120,30 +120,3 @@ def checkForIntegrity(filenameOfResource, filenameOfHash):
         return True
     else:
         return False
-    
-
-
-def main():
-
-    text = 'a'
-
-    padded_text = padding(text)
-
-    #printBinary(padded_text)
-    resultOfMD5 = MD5(padded_text)
-
-
-    with open('photo.png', 'rb') as f:
-        data = f.read()
-
-    hashFromFile = MD5(padding(data))
-
-    temp = 'bff8a153f6e6a0223e6670e2a15256ab'
-
-    #print(f"RES:  {MD5(padding(hashFromFile))}")
-
-    print(checkForIntegrity('photo.png', 'hash.txt'))
-
-    #print(resultOfMD5)
-
-main()

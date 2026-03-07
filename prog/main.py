@@ -5,6 +5,7 @@ from PyQt6.QtCore import Qt
 
 from lab1.back_end_lab1 import generateNumbers, runTest
 
+from lab2.back_end_lab2 import padding, MD5, checkForIntegrity
 
 
 
@@ -58,7 +59,7 @@ class MainWindow(QWidget):
 
         for i, lab_page in enumerate(labs, 1):
             btn = QPushButton(f"Перейти до Лабораторної №{i}")
-            if i < 2:
+            if i < 3:
                 btn.clicked.connect(lambda checked, lp=lab_page: self.stacked_widget.setCurrentWidget(lp))
             btn.setFixedHeight(40)
             btn.setFixedWidth(800)
@@ -141,16 +142,96 @@ class MainWindow(QWidget):
     def create_lab2_page(self):
         page = QWidget()
         layout = QVBoxLayout(page)
+        layout.setSpacing(20) 
+
+        label = QLabel("Лабораторна робота №2\nCтворення програмного засобу для забезпечення цілісності інформації")
+        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
-        label = QLabel("Лабораторна робота №2")
+        user_input = QLineEdit()
+        user_input.setPlaceholderText("Введіть текст для хешування...")
+        user_input.setFixedWidth(600) 
+        user_input.setFixedHeight(40)
+
+        btn_generate = QPushButton("Хешувати")
+        btn_generate.setFixedWidth(200)
+
+        result_display = QLabel()
+        result_display.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        result_display.setStyleSheet("font-size: 25px; color: #191102; margin-top: 50px;")
+        result_display.setWordWrap(True)
+        result_display.setFixedHeight(100)
+        result_display.setFixedWidth(800)
+
+        def on_generate():
+            raw_text = user_input.text()
+            count = len(raw_text)
+            if count > 48:
+                result_display.setText("Надто велике значення для генерації, скористуйтесь файловим вводом")
+                return
+            
+            self.hash = MD5(padding(raw_text))
+            successLabel.hide()
+            fileButton.show()
+            result_display.setText(f"Результат: {str(self.hash)}")
+
+        def file_write():
+            self.filename = user_input.text()
+
+            if self.filename == '':
+                return
+
+            with open(f'lab2/txt/{self.filename}.txt', 'w') as f:
+                f.write(self.hash)
+
+            user_input.setPlaceholderText('Введіть текст для хешування...')
+            user_input.clear()
+            successLabel.setText(f'Готово! Результат записано в {self.filename}')
+            successLabel.show()
+            btn_generate.show()
+            btn_save_file.hide()
+            result_display.setText('')
+
+        def get_file_name():
+            user_input.clear()
+            btn_generate.hide()
+            user_input.setPlaceholderText("Введіть ім'я файлу для збереження хешу...")
+            fileButton.hide()
+            btn_save_file.show()
+
+        btn_save_file = QPushButton('Зберегти у файл')
+        btn_save_file.hide()
+        btn_save_file.clicked.connect(file_write)
+
+        successLabel = QLabel()
+        successLabel.setStyleSheet('color:#263B6A;font-size:20px')
+        successLabel.hide()   
+        
+        fileButton = QPushButton('Записати в файл')
+        fileButton.hide()
+        fileButton.setFixedHeight(35)
+
+        btn_generate.clicked.connect(on_generate)
+        fileButton.clicked.connect(get_file_name)
+
         btn_back = QPushButton("Назад до меню")
-        
+        btn_back.setFixedWidth(200)
         btn_back.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        
-        layout.addWidget(label, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(btn_back)
+
+
+        layout.addStretch() 
+        layout.addWidget(label)
+        layout.addStretch()
+        layout.addWidget(user_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(successLabel, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(btn_generate, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(btn_save_file, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(result_display, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(fileButton, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addStretch()
+        layout.addWidget(btn_back, alignment=Qt.AlignmentFlag.AlignCenter)
+
         return page
-    
+
     def create_lab3_page(self):
         page = QWidget()
         layout = QVBoxLayout(page)
@@ -200,7 +281,6 @@ def main():
         QLabel {
         font-size: 30px; 
         font-weight: bold; 
-        margin-bottom: 20px;        
         font-family: 'Segoe UI', sans-serif;
         color: #2c3e50;
         }
